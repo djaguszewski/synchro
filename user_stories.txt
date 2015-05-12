@@ -1,2 +1,7 @@
 Story 001:
 As a user I want to be able to list and download activities from Endomondo
+
+To do:
+1. List activities 
+2. Get activity by id
+3. Get all activities
