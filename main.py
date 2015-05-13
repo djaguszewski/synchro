@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
 from endomondo import Endomondo
 
-endomondo = Endomondo("email", "pass")
+endomondo = Endomondo("dominik.jaguszewski@gmail.com", "")
 
-test = endomondo.authenticate()
-print test
+try:
+	endomondo.authenticate()
+except ValueError:
+	print "Authentication failed"
+	quit()
+except:
+	print "Unknown error"
+	quit()
+
 print endomondo.authToken
 print endomondo.secureToken

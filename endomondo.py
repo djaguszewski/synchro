@@ -3,6 +3,11 @@
 
 import requests
 
+class AuthenticationError(ValueError):
+	'''
+	Authentication unsuccessfull
+	'''
+
 class Endomondo:
 	#URL's used in connectivity with Endomondo
 	#Authentication:
@@ -39,7 +44,7 @@ class Endomondo:
 		if splitted_response[0] != "OK":
 			self.authToken = -1
 			self.secureToken = -1
-			return -1
+			raise AuthenticationError("Authentication problem: %s" % splitted_response[0])
 		else:
 			for line in splitted_response:
 				if "authToken" in line:
@@ -48,4 +53,3 @@ class Endomondo:
 				if "secureToken" in line:
 					key,value = line.split("=")
 					self.secureToken = value
-			return 0
