@@ -7,6 +7,8 @@ class Endomondo:
 	#URL's used in connectivity with Endomondo
 	#Authentication:
 	authentication_url = "https://api.mobile.endomondo.com/mobile/auth"	
+	authToken = None;
+	secureToken = None;
 
 	def __init__(self,username,password):
 		self.username = username
@@ -17,11 +19,9 @@ class Endomondo:
 	authenticate
 	It gets username (email) and password and returns two tokens
 
-	If authentication is successfull it returns:
-	[{authenticationToken},{secureToken}]
+	If authentication is successfull it returns 0
 
-	If authentication fails it returns:
-	[-1,-1]
+	If authentication fails it returns -1
 	'''
 	
 	def authenticate(self):
@@ -35,16 +35,17 @@ class Endomondo:
 
 		response = self.request.get(self.authentication_url,params=request_params)
 		splitted_response = response.text.split("\n")
-		exit_values = {'auth' : 0, 'sec': 0}
+
 		if splitted_response[0] != "OK":
-			exit_values = {'auth' : -1, 'sec': -1}
+			self.authToken = -1
+			self.secureToken = -1
+			return -1
 		else:
-			splitted_response.pop(0)
 			for line in splitted_response:
-				key,value = line.split("=")
-				if key=="authToken":
-					exit_values['auth']=value
-				if key=="secureToken":
-					exit_values['sec']=value
-					break
-		return exit_values
+				if "authToken" in line:
+					key,value = line.split("=")
+					self.authToken = value
+				if "secureToken" in line:
+					key,value = line.split("=")
+					self.secureToken = value
+			return 0

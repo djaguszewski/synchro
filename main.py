@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from endomondo import Endomondo
 
-endomondo = Endomondo("em@ai.l", "pass")
+endomondo = Endomondo("email", "pass")
 
 test = endomondo.authenticate()
-print test['auth']
-print test['sec']
+print test
+print endomondo.authToken
+print endomondo.secureToken
