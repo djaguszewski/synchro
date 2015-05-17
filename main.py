@@ -4,7 +4,7 @@ import logging, sys
 
 logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
 
-endomondo = Endomondo("e@mail.com", "pass")
+endomondo = Endomondo("user", "pass")
 
 try:
 	endomondo.authenticate()
@@ -15,5 +15,4 @@ except:
 	print "Unknown error"
 	quit()
 
-#print endomondo.authToken
-#print endomondo.secureToken
+endomondo.get_user_data()
